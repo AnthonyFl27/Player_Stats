@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string.h>
 #include <cstdlib>  // Para system()
+#include <vector>
 
 using namespace std;
 
@@ -28,11 +29,10 @@ struct jugador{
     int edad;
     double estatura;
     double peso;
+    string equipo_del_jugador;
     int numero_jugador;
     int partidos_jugados;
 };
-
-void registrar_partidos( )
 
 int main()
 {
