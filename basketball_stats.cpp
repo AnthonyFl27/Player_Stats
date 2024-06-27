@@ -6,9 +6,8 @@
 #include <iostream>
 #include <fstream>
 #include <cstdlib>  // Para system()
-#include <string>
+#include <string>   // Para emplear strings en el codigo
 #include <vector>
-#include <iomanip>  // Para std::fixed y std::setprecision
 
 using namespace std;
 
@@ -140,6 +139,7 @@ public:
         cin >> perdidas;
     }
 
+    // Funcion para calcular los puntos totales teniendo en cuenta los tiros anotados
     int calcular_puntos_totales() const {
         int puntos_dos = tiros_anotados * 2; // Cada tiro vale 2 puntos
         int puntos_tres = triples_anotado * 3; // Cada triple vale 3 puntos
@@ -149,27 +149,33 @@ public:
         return puntos_totales;
     }
 
+    // Esta funcion es para calcular el porcentaje de los tiros, diviendo los anotados e intentados y multiplicandolos por 100
     double calcular_porcentaje_tiros() const {
         return static_cast <double> (tiros_anotados) / tiros_intentados * 100.0;
     }
 
+    // Igual que la funcion pasada para calcular el porcentaje de los triples anotados
     double calcular_porcentaje_triples() const {
         return static_cast <double> (triples_anotado) / triples_intentados * 100.0;
     }
 
+    // Otra funcion para calcular porcentaje de tiros libres
     double calcular_porcentaje_libres() const {
         return static_cast <double> (libres_anotados) / libres_intentados * 100.0;
     }
 
+    // Esta es un poco más diferente a las demás porque se calcula la eficiencia del tiro el cual incluye las variables de todos los tiros, libres, triples y de campo
     double calcular_eficiencia_de_tiro() const {
         int total_tiros = tiros_intentados + triples_intentados + libres_intentados;
-        return static_cast <double> (puntos_totales) / total_tiros * 100.0;
+        return static_cast <double> (total_tiros) / puntos_totales * 100.0;
     }
 
+    // Ya esta es para calcula la eficiencia del jugador el cual toma todas las estadisticas las suma y las resta con las perdidas para luego dividirlas en los partidos jugados
     double calcular_valoracion_eficiencia() const {
         return static_cast <double> (puntos_totales + rebotes_ofensivos + rebotes_defensivos + asistencias + robos + bloqueos - perdidas) / partidos_jugados;
     }
 
+    // La ultima funcion muy basica el cual suma los rebotes of y def para dar un rebote total
     int calcular_rebotes_totales() const {
         return rebotes_ofensivos + rebotes_defensivos;
     }
@@ -256,6 +262,13 @@ public:
                 archivo << "Minutos jugados: " << minutos_jugados << endl;
 
                 // Estadisticas basicas del jugador
+                archivo << "  _____     _         _ _     _   _                  _     _      _               _            \n";
+                archivo << " |   __|___| |_ ___ _| |_|___| |_|_|___ ___ ___    _| |___| |    |_|_ _ ___ ___ _| |___ ___    \n";
+                archivo << " |   __|_ -|  _| .'| . | |_ -|  _| |  _| .'|_ -|  | . | -_| |    | | | | . | .'| . | . |  _|   \n";
+                archivo << " |_____|___|_| |__,|___|_|___|_| |_|___|__,|___|  |___|___|_|   _| |___|_  |__,|___|___|_|     \n";
+                archivo << "                                                               |___|   |___|                   \n";
+                // Codigo Ascii generado en https://www.creativefabrica.com/es/tools/ascii-art-generator/
+
                 archivo << "\nEstadísticas del Jugador:" << endl;
                 archivo << "Rebotes totales: " << calcular_rebotes_totales() << endl;
                 archivo << "Asistencias dadas: " << asistencias << endl;
@@ -266,8 +279,17 @@ public:
                 // Datos estadisticos, promedios, eficiencia del jugador
                 archivo << "\nEstadísticas y porcentajes del Jugador:" << endl;
 
+                // Tiros anotados e intentados
+                archivo << "Tiros anotados: " << tiros_anotados << " / Tiros intentados: " << tiros_intentados << endl;
+
+                // Triples anotados e intentados
+                archivo << "Triples anotados: " << triples_anotado << " / Triples intentados: " << triples_intentados << endl;
+
+                // Tiros libres anotados e intentados
+                archivo << "Tiros libres anotados: " << libres_anotados << " / Tiros libres intentados: " << libres_intentados << endl;
+
                 archivo << "Puntos totales del jugador: " << calcular_puntos_totales() << endl;
-                archivo << "Porcentaje de tiros de campo: " << calcular_porcentaje_tiros() << "%" << endl;
+                archivo << "\nPorcentaje de tiros de campo: " << calcular_porcentaje_tiros() << "%" << endl;
                 archivo << "Porcentaje de triples: " << calcular_porcentaje_triples() << "%" << endl;
                 archivo << "Porcentaje de tiros libres: " << calcular_porcentaje_libres() << "%" << endl;
 
@@ -275,7 +297,7 @@ public:
                 archivo << "Rebotes totales: " << calcular_rebotes_totales() << endl;
 
                 archivo << "Eficiencia de tiro efectiva del jugador: " << calcular_eficiencia_de_tiro() << "%" << endl;
-                cout << "Valoración de eficiencia del jugador: " << fixed << setprecision(2) << calcular_valoracion_eficiencia() << "%" << endl;
+                archivo << "Valoración de eficiencia del jugador: " << calcular_valoracion_eficiencia() << "%" << endl;
                 // Salto de linea
                 archivo << endl;
             } else {
@@ -284,23 +306,27 @@ public:
         }
     };
 
+    // En esta funcion void, lo que se hará es crear un metodo para guardar las estadisitcas calculadas y generadas en un archivo de texto si el usario lo desea
     void guardar_jugadores(const vector <Jugador> & jugadores, const string & nombreArchivo) {
-        ofstream archivo(nombreArchivo.c_str());
-        if (archivo.is_open()) {
+        ofstream archivo(nombreArchivo.c_str()); // Creamos el objeto archivo para que este listo para escribir en el archivo
+        if (archivo.is_open()) { // Si el archivo se abre, guardar los datos de los jugadores previamente ingresados
             for (size_t i = 0; i < jugadores.size(); ++i) {
                 jugadores[i].guardar_datos_en_archivo(archivo);
             }
-            archivo.close();
-            cout << "Datos guardados en " << nombreArchivo << endl;
+            archivo.close(); // Si esto se cumple cerrar el archivo ya guardado
+            cout << "Datos guardados en " << nombreArchivo << endl; // Mensaje para decirnos donde se guardo nuestro archivo
         } else {
-            cout << "No se pudo abrir el archivo." << endl;
+            cout << "No se pudo abrir el archivo." << endl; // Si el archivo no se guarda decirle al usario que no se ha podido abrir dicho archivo
         }
     }
 
+    // Creamos la funcion main, la cual va contener el resto de funciones programadas y el menu de inicio de sesion
     int main() {
-        vector<Jugador> jugadores;
+        vector <Jugador> jugadores;
+        // definimos la variable opcion para poder hacer elecciones
         int opcion;
 
+        // Iniciamos la funcion main con un do while y toda la sentecia de opciones que queremos ejecutar
         do {
             clean();
             cout << " _____                 _____         _       _   _       _ _  \n";
@@ -316,6 +342,7 @@ public:
             cin >> opcion;
             cin.ignore(); // Ignorar el salto de línea pendiente
 
+            // Creamos el menu, siendo la primera opcion el numero 1, esto le permetira agregar un jugador luego de uno creado o crear uno nuevo
             switch (opcion) {
                 case 1: {
                     Jugador jugador;
@@ -323,6 +350,7 @@ public:
                     jugadores.push_back(jugador);
                     break;
                 }
+                // En la opcion dos tenemos que este se le mostrara las estadisticas, de su jugador o jugadores creados
                 case 2:
                     for (size_t i = 0; i < jugadores.size(); ++i) {
                         cout << "\nJugador " << i + 1 << ":" << endl;
@@ -335,17 +363,20 @@ public:
                     }
                     clean(); // Mover clean() aquí para limpiar solo después de mostrar todos los datos
                     break;
+                // En la opcion 3 se creara el archivo de texto para que este tenga un registro luego de salir del programa
                 case 3:
                     guardar_jugadores(jugadores, "datos_jugadores.txt");
                     break;
+                // En la opcion 4 se le permitira salir del programa sin ejecutar alguna combinacion de teclas y seguir usando la lineas de comando empleada
                 case 4:
                     cout << "Saliendo del programa." << endl;
                     break;
+                // Como predeterminado tenemos que si este ingresa un caracter no pedido se le saltara advertencia de opcion no valida y no dejara elegir ejecutar el resto de funciones
                 default:
                     cout << "Opcion no valida." << endl;
                     break;
             }
-        } while (opcion != 4);
+        } while (opcion != 4); // Cerramos el do con un while y la opcion 4
 
     return 0;
 }
