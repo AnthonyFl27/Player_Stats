@@ -60,6 +60,13 @@ public:
     void ingresar_datos() {
         clean();
         // Comenzamos pidiendo que el usario ingrese sus datos generales
+        cout << "  ____      _                                      _           \n";
+        cout << " |    \\ ___| |_ ___ ___    ___ ___ ___ ___ ___ ___| |___ ___   \n";
+        cout << " |  |  | .'|  _| . |_ -|  | . | -_|   | -_|  _| .'| | -_|_ -|  \n";
+        cout << " |____/|__,|_| |___|___|  |_  |___|_|_|___|_| |__,|_|___|___|  \n";
+        cout << "                          |___|                                \n";
+        // Codigo Ascii generado en https://www.creativefabrica.com/es/tools/ascii-art-generator/
+
         cout << "Ingrese el nombre del jugador de Baloncesto: ";
         getline(cin, nombre);
 
@@ -88,19 +95,27 @@ public:
 
         // Ahora comenzamos a pedir los datos estadisticos del jugador
         // Luego vamos a preguntarle sobre los tiros que acerto y los que intento
+        clean();
+        cout << "  _____     _         _ _     _   _                  _     _      _               _            \n";
+        cout << " |   __|___| |_ ___ _| |_|___| |_|_|___ ___ ___    _| |___| |    |_|_ _ ___ ___ _| |___ ___    \n";
+        cout << " |   __|_ -|  _| .'| . | |_ -|  _| |  _| .'|_ -|  | . | -_| |    | | | | . | .'| . | . |  _|   \n";
+        cout << " |_____|___|_| |__,|___|_|___|_| |_|___|__,|___|  |___|___|_|   _| |___|_  |__,|___|___|_|     \n";
+        cout << "                                                               |___|   |___|                   \n";
+        // Codigo Ascii generado en https://www.creativefabrica.com/es/tools/ascii-art-generator/
+
         cout << "\nIngrese el número de tiros anotados: ";
         cin >> tiros_anotados;
         cout << "Ingrese el número de tiros intentados: ";
         cin >> tiros_intentados;
 
         // Seguiremos pidiendo informacion sobre los triples
-        cout << "Ingrese el número de tiros de 3 puntos anotados: ";
+        cout << "\nIngrese el número de tiros de 3 puntos anotados: ";
         cin >> triples_anotado;
         cout << "Ingrese el número de tiros de 3 puntos intentados: ";
         cin >> triples_intentados;
 
         // Ahora los tiros de libres que anoto y que intento
-        cout << "Ingrese el número de tiros libres anotados: ";
+        cout << "\nIngrese el número de tiros libres anotados: ";
         cin >> libres_anotados;
         cout << "Ingrese el número de tiros libres intentados: ";
         cin >> libres_intentados;
@@ -112,7 +127,7 @@ public:
         cin >> rebotes_defensivos;
 
         // Ahora seguerimos con estadisticas que no tiene par, como lo es robos, asistencias, bloqueos y perdidas del jugador
-        cout << "Ingrese el número de asistencias dadas: ";
+        cout << "\nIngrese el número de asistencias dadas: ";
         cin >> asistencias;
 
         cout << "Ingrese el número de robos realizados: ";
@@ -126,8 +141,8 @@ public:
     }
 
     int calcular_puntos_totales() const {
-        int puntos_dos = tiros_anotados * 2;
-        int puntos_tres = triples_anotado * 3;
+        int puntos_dos = tiros_anotados * 2; // Cada tiro vale 2 puntos
+        int puntos_tres = triples_anotado * 3; // Cada triple vale 3 puntos
         int puntos_libres = libres_anotados * 1;  // Cada tiro libre vale 1 punto
 
         int puntos_totales = puntos_dos + puntos_tres + puntos_libres;
@@ -135,30 +150,25 @@ public:
     }
 
     double calcular_porcentaje_tiros() const {
-           return (tiros_intentados > 0) ? static_cast<double>(tiros_anotados) / tiros_intentados * 100.0 : 0.0;
-       }
+        return static_cast <double> (tiros_anotados) / tiros_intentados * 100.0;
+    }
 
-       double calcular_porcentaje_triples() const {
-           return (triples_intentados > 0) ? static_cast<double>(triples_anotado) / triples_intentados * 100.0 : 0.0;
-       }
+    double calcular_porcentaje_triples() const {
+        return static_cast <double> (triples_anotado) / triples_intentados * 100.0;
+    }
 
-       double calcular_porcentaje_libres() const {
-           if (libres_intentados > 0) {
-               return static_cast<double>(libres_anotados) / libres_intentados * 100.0;
-           }
-           return 0.0;
-       }
+    double calcular_porcentaje_libres() const {
+        return static_cast <double> (libres_anotados) / libres_intentados * 100.0;
+    }
 
-       double calcular_eficiencia_de_tiro() const {
-           if (tiros_intentados + triples_intentados + libres_intentados > 0) {
-               return static_cast<double>(puntos_totales) / (tiros_intentados + triples_intentados + libres_intentados) * 100.0;
-           }
-           return 0.0;
-       }
+    double calcular_eficiencia_de_tiro() const {
+        int total_tiros = tiros_intentados + triples_intentados + libres_intentados;
+        return static_cast <double> (puntos_totales) / total_tiros * 100.0;
+    }
 
-       double calcular_valoracion_eficiencia() const {
-           return (partidos_jugados > 0) ? static_cast<double>(puntos_totales + rebotes_ofensivos + rebotes_defensivos + asistencias + robos + bloqueos - perdidas) / partidos_jugados : 0.0;
-       }
+    double calcular_valoracion_eficiencia() const {
+        return static_cast <double> (puntos_totales + rebotes_ofensivos + rebotes_defensivos + asistencias + robos + bloqueos - perdidas) / partidos_jugados;
+    }
 
     int calcular_rebotes_totales() const {
         return rebotes_ofensivos + rebotes_defensivos;
@@ -180,16 +190,13 @@ public:
         cout << "\nEstadísticas generales del del Jugador:" << endl;
 
         // Tiros anotados e intentados
-        cout << "Tiros anotados: " << tiros_anotados << endl;
-        cout << "Tiros intentados: " << tiros_intentados << endl;
+        cout << "Tiros anotados: " << tiros_anotados << " / Tiros intentados: " << tiros_intentados << endl;
 
         // Triples anotados e intentados
-        cout << "Triples anotados: " << triples_anotado << endl;
-        cout << "Triples intentados: " << triples_intentados << endl;
+        cout << "Triples anotados: " << triples_anotado << " / Triples intentados: " << triples_intentados << endl;
 
         // Tiros libres anotados e intentados
-        cout << "Tiros libres anotados: " << libres_anotados << endl;
-        cout << "Tiros libres intentados: " << libres_intentados << endl;
+        cout << "Tiros libres anotados: " << libres_anotados << " / Tiros libres intentados: " << libres_intentados << endl;
 
         // Rebotes ofensivos y denfensivos realizados
         cout << "\nOtras estadísticas:" << endl;
@@ -212,8 +219,8 @@ public:
             cout << "\nPromedios y Estadisticas por Partido:" << endl;
 
             cout << "Puntos totales del jugador: " << calcular_puntos_totales() << endl;
-            cout << "Porcentaje de tiros de campo: " << fixed << setprecision(2) << calcular_porcentaje_tiros() << "%" << endl;
-            cout << "Porcentaje de triples: " << fixed << setprecision(2) << calcular_porcentaje_triples() << "%" << endl;
+            cout << "Porcentaje de tiros de campo: " << calcular_porcentaje_tiros() << "%" << endl;
+            cout << "Porcentaje de triples: " << calcular_porcentaje_triples() << "%" << endl;
             cout << "Porcentaje de tiros libres: " << calcular_porcentaje_libres() << "%" << endl;
 
             cout << "Rebotes ofensivos: " << rebotes_ofensivos << " y rebotes defensivos: " << rebotes_defensivos << endl;
@@ -225,17 +232,18 @@ public:
             cout << "Perdidas cometidas por partido: " << perdidas << endl;
 
             cout << "Eficiencia de tiro efectiva del jugador: " << calcular_eficiencia_de_tiro() << "%" << endl;
-            cout << "Valoración de eficiencia del jugador: " << fixed << setprecision(2) << calcular_valoracion_eficiencia() << "%" << endl;
+            cout << "Valoración de eficiencia del jugador: " << calcular_valoracion_eficiencia() << "%" << endl;
         }
 
     // Método para guardar los datos en un archivo
-        void guardarDatosEnArchivo(ofstream& archivo) const {
+        void guardar_datos_en_archivo(ofstream& archivo) const {
             if (archivo.is_open()) {
                 // Datos personales y generales del jugador
                 archivo << " _____         _       _   _       _ _    _____ _       _          \n";
                 archivo << " | __  |___ ___| |_ ___| |_| |_ ___| | |  |   __| |_ ___| |_ ___   \n";
                 archivo << " | __ -| .'|_ -| '_| -_|  _| . | .'| | |  |__   |  _| .'|  _|_ -|  \n";
                 archivo << " |_____|__,|___|_,_|___|_| |___|__,|_|_|  |_____|_| |__,|_| |___|  \n";
+                // Codigo Ascii generado en https://www.creativefabrica.com/es/tools/ascii-art-generator/
 
                 archivo << "Datos Personales del Jugador:" << endl;
                 archivo << "Nombre: " << nombre << endl;
@@ -280,7 +288,7 @@ public:
         ofstream archivo(nombreArchivo.c_str());
         if (archivo.is_open()) {
             for (size_t i = 0; i < jugadores.size(); ++i) {
-                jugadores[i].guardarDatosEnArchivo(archivo);
+                jugadores[i].guardar_datos_en_archivo(archivo);
             }
             archivo.close();
             cout << "Datos guardados en " << nombreArchivo << endl;
@@ -341,9 +349,3 @@ public:
 
     return 0;
 }
-
-
-/*
-cout << "";
-cin  >> ;
-*/
