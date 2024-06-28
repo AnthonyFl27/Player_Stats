@@ -1,4 +1,4 @@
-![Descripción de la imagen](player_stats.png)
+![Descripción de la imagen](Images/player_stats.png)
 
 # Estadísticas de Jugadores de Fútbol y Baloncesto
 
@@ -56,7 +56,3 @@ Si deseas contribuir a este proyecto, puedes seguir estos pasos:
 6. Crea un nuevo pull request en el repositorio original.
 
 ¡Gracias por tu interés en contribuir!
-
-## Licencia
-
-Este proyecto se distribuye bajo la [Licencia MIT](LICENSE).
