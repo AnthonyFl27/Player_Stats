@@ -1,47 +1,108 @@
-#include <iostream>
-#include <cstdlib>  // Para system()
 #include "futbol.h"
 #include "basketball.h"
+#include <iostream>
+#include <fstream>
 
 using namespace std;
 
-// función para limpiar la terminal
 void clean() {
-    #ifdef _WIN32
-        system("cls");
-    #else
-        system("clear");
-    #endif
+    ofstream archivo_futbol("estadisticas_futbol.txt");
+    archivo_futbol.close();
+
+    ofstream archivo_basketball("estadisticas_basketball.txt");
+    archivo_basketball.close();
 }
 
-void mostrar_menu() {
-    cout << "Seleccione el deporte con el que desea trabajar: \n ";
-    cout << "1.Baloncesto\n";
-    cout << "2.Futbol\n";
-    cout << "3.Salir del programa...\n";
-    cout << "Seleccione una opcion: ";
-    cin.ignore();
-}
-
-int main()
-{
+void menu_futbol() {
+    JugadorFutbol jugador;
     int opcion;
-    mostrar_menu();
+    do {
+        cout << "Seleccione una opción:\n";
+        cout << "1. Crear nuevo jugador\n";
+        cout << "2. Mostrar estadísticas\n";
+        cout << "3. Guardar estadísticas en archivo\n";
+        cout << "4. Salir\n";
+        cout << "Opción: ";
+        cin >> opcion;
+
+        switch (opcion) {
+            case 1:
+                jugador.ingresar_datos();
+                break;
+            case 2:
+                jugador.mostrar_datos_personales();
+                jugador.mostrar_estadisticas();
+                jugador.mostrar_promedios();
+                break;
+            case 3:
+                {
+                    ofstream archivo("estadisticas_futbol.txt", ios::app);
+                    jugador.guardar_datos_en_archivo(archivo);
+                    archivo.close();
+                }
+                break;
+            case 4:
+                cout << "Saliendo...\n";
+                break;
+            default:
+                cout << "Opción no válida\n";
+                break;
+        }
+    } while (opcion != 4);
+}
+
+void menu_basketball() {
+    JugadorBasketball jugador;
+    int opcion;
+    do {
+        cout << "Seleccione una opción:\n";
+        cout << "1. Crear nuevo jugador\n";
+        cout << "2. Mostrar estadísticas\n";
+        cout << "3. Guardar estadísticas en archivo\n";
+        cout << "4. Salir\n";
+        cout << "Opción: ";
+        cin >> opcion;
+
+        switch (opcion) {
+            case 1:
+                jugador.ingresar_datos();
+                break;
+            case 2:
+                jugador.mostrar_datos_personales();
+                jugador.mostrar_estadisticas();
+                jugador.mostrar_promedios();
+                break;
+            case 3:
+                {
+                    ofstream archivo("estadisticas_basketball.txt", ios::app);
+                    jugador.guardar_datos_en_archivo(archivo);
+                    archivo.close();
+                }
+                break;
+            case 4:
+                cout << "Saliendo...\n";
+                break;
+            default:
+                cout << "Opción no válida\n";
+                break;
+        }
+    } while (opcion != 4);
+}
+
+int main() {
+    int opcion;
+    cout << "Seleccione la opción:\n";
+    cout << "1. Estadísticas de Futbol\n";
+    cout << "2. Estadísticas de Basketball\n";
+    cout << "Opción: ";
     cin >> opcion;
 
-    switch (opcion) {
-        case 1:
-            ejecutar_basketball_stats();
-            break;
-        case 2:
-            ejecutar_futboll_stats();
-            break;
-        case 3:
-            cout << "Saliendo del programa." << endl;
-            break;
-        default:
-            cout << "Opcion no valida." << endl;
-            break;
+    if (opcion == 1) {
+        menu_futbol();
+    } else if (opcion == 2) {
+        menu_basketball();
+    } else {
+        cout << "Opción no válida" << endl;
     }
 
     return 0;
