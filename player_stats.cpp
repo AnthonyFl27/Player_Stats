@@ -380,7 +380,7 @@ void futbol(){
 
     printf("Bienvenido a la seccion futbolitica\n");
     printf("Ingrese el nombre del equipo:\n");
-    getline(cin,equipo);
+    cin >> equipo;
 
     cout<<"\nDigita la cantidad de partidos pendientes: "<<endl;
     cin>>cantpartp;
