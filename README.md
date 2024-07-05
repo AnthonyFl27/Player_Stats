@@ -27,7 +27,7 @@ git clone https://github.com/AnthonyFl27/Player_Stats.git
 ```bash
 cd Player_Stats
 
-g++ -o proyecto main.cpp futbol/futbol.cpp baloncesto/baloncesto.cpp
+g++ player_stats.cpp
 ```
 3. Ejecuta el programa:
 ```bash
