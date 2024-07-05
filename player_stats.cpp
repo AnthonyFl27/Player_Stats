@@ -6,6 +6,7 @@
 
 using namespace std;
 
+// Funcion para limpiar la pantalla
 void clean() {
 #ifdef _WIN32
     system("cls");
@@ -511,6 +512,13 @@ int main() {
     int opcion;
     clean();
 
+    cout << " _____ _                    _____ _        _           \n";
+    cout << " |  _  | |___ _ _ ___ ___   |   __| |_ ___| |_ ___     \n";
+    cout << " |   __| | .'| | | -_|  _|  |__   |  _| .'|  _|_ -|    \n";
+    cout << " |__|  |_|__,|_  |___|_|    |_____|_| |__,|_| |___|    \n";
+    cout << "             |___|                                     \n";
+    // https://www.creativefabrica.com/es/tools/ascii-art-generator/?text=Player+Stats
+
     cout << "Seleccione el deporte con el que desea trabajar: \n ";
     cout << "1.Baloncesto\n";
     cout << "2.Futbol\n";
@@ -518,15 +526,19 @@ int main() {
     cout << "Seleccione una opcion: ";
     cin >> opcion;
 
+    // Con switch hacemos que las acciones del usario sean ejecutadas
     switch (opcion) {
         case 1:
-            basketball();
+            basketball(); // Ejecutar basketball
             break;
         case 2:
-            futbol();
+            futbol(); // Ejecución de futbol
+            break;
+        case 3:
+            cout << "Saliendo del programa..." << endl; // Saliendo del programa
             break;
         default:
-            std::cout << "Opción inválida" << std::endl;
+            std::cout << "Opción inválida" << std::endl; // Selección default, no se ejecutara nada
             break;
     }
 
